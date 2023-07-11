@@ -1,0 +1,1 @@
+This project is a web sudoku resolver application, import a sudoku and the application will solve it step by step for you showing each steps
