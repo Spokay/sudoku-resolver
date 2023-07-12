@@ -1,13 +1,10 @@
 package com.spokay.sudokusolver.model.shape;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Builder
 public class LineShape implements Shape{
 }

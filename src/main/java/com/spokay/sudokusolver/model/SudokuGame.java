@@ -5,7 +5,8 @@ import lombok.*;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class SudokuGame {
     Grid grid;

@@ -1,13 +1,11 @@
 package com.spokay.sudokusolver.model.cases;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class FilledCase implements Case{
     private Integer value;

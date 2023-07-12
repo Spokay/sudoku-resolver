@@ -3,17 +3,15 @@ package com.spokay.sudokusolver.model.grid;
 import com.spokay.sudokusolver.model.cases.Case;
 import com.spokay.sudokusolver.model.shape.LineShape;
 import com.spokay.sudokusolver.model.shape.SquareShape;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashMap;
 import java.util.List;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class ClassicGrid implements Grid{
     private List<SquareShape> squares;
