@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+
 @Controller
 @RequestMapping("/sudoku")
 @AllArgsConstructor
@@ -18,7 +20,7 @@ public class SudokuController {
     SudokuBuilder sudokuBuilder;
 
     @PostMapping("/start")
-    public ModelAndView startSudoku(@Validated GridCreationDTO gridCreationDTO){
+    public ModelAndView startSudoku(@Validated GridCreationDTO gridCreationDTO) throws IOException {
         SudokuGame sudokuGame = sudokuBuilder.buildSudokuFromGridData(gridCreationDTO);
         return new ModelAndView("solved-sudoku").addObject(sudokuGame);
     }

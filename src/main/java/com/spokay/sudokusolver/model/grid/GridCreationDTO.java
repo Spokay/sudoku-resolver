@@ -8,5 +8,11 @@ import org.springframework.lang.NonNull;
 @Builder
 public class GridCreationDTO {
     @NonNull
+    private Integer gridWidth;
+
+    @NonNull
+    private Integer gridHeight;
+
+    @NonNull
     private String gridStringData;
 }

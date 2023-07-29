@@ -1,5 +1,10 @@
 package com.spokay.sudokusolver.model.cases;
 
-public interface Case {
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
+public abstract class Case {
+    protected Integer value;
 }

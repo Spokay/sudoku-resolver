@@ -1,10 +1,8 @@
 package com.spokay.sudokusolver.model.cases;
 
-import lombok.*;
+public class EmptyCase extends Case{
 
-@Getter
-@Setter
-@NoArgsConstructor
-@Builder
-public class EmptyCase implements Case{
+    public EmptyCase(){
+        this.setValue(0);
+    }
 }
