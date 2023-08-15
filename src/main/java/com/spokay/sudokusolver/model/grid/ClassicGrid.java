@@ -4,16 +4,17 @@ import com.spokay.sudokusolver.model.cases.Case;
 import com.spokay.sudokusolver.model.shape.LineShape;
 import com.spokay.sudokusolver.model.shape.SquareShape;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.HashMap;
 import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class ClassicGrid implements Grid{
+@NoArgsConstructor
+@SuperBuilder
+public class ClassicGrid extends Grid{
     private List<SquareShape> squares;
     private HashMap<String, List<LineShape>> lines;
     private Case[][] cases;
