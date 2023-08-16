@@ -14,22 +14,40 @@ import java.util.List;
 public class ShapeBuilder {
     public HashMap<String, List<LineShape>> buildLinesFromCases(Case[][] cases) {
         HashMap<String, List<LineShape>> lines = new HashMap<>();
-        List<LineShape> xLines = new ArrayList<>();
-        List<LineShape> yLines = new ArrayList<>();
-        // get all the line on x-axis
-
+        List<LineShape> rowsLines = new ArrayList<>();
+        List<LineShape> columnLines = new ArrayList<>();
+        // initialize rows array and fill all the rows
         for (int y = 0; y < cases.length; y++) {
-            Case[] casesInLine = new Case[cases.length];
-            System.arraycopy(cases[y], 0, casesInLine, 0, cases[y].length);
-            xLines.add(y,
+            Case[] casesInRow = new Case[cases.length];
+            System.arraycopy(cases[y], 0, casesInRow, 0, cases[y].length);
+
+            rowsLines.add(y,
                     LineShape.builder()
-                    .lineCases(casesInLine)
+                    .lineCases(casesInRow)
                     .build()
             );
         }
 
-        Arrays.stream(xLines.get(8).getLineCases()).forEach(e -> System.out.println(e.getValue() + "\n"));
-        return null;
+        // initialize column array
+        for (int y = 0; y < cases.length; y++) {
+            Case[] casesInColumn = new Case[cases.length];
+            columnLines.add(y,
+                    LineShape.builder()
+                    .lineCases(casesInColumn)
+                    .build()
+            );
+        }
+        // fill all the columns
+        for (int y = 0; y < cases.length; y++) {
+             for (int x = 0; x < cases[y].length; x++) {
+                columnLines.get(x).getLineCases()[y] = cases[y][x];
+            }
+        }
+        Arrays.stream(columnLines.get(8).getLineCases()).forEach(e -> System.out.println(e.getValue() + "\n"));
+
+        lines.put("rows", rowsLines);
+        lines.put("columns", columnLines);
+        return lines;
     }
 
     public List<SquareShape> buildSquaresFromCases(Case[][] cases) {
