@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 public class ClassicGrid extends Grid{
-    private List<SquareShape> squares;
+    private HashMap<Integer, List<SquareShape>> squares;
     private HashMap<String, List<LineShape>> lines;
     private Case[][] cases;
     public LineShape getLineByRowNumber(Integer rowNumber){

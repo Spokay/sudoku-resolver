@@ -25,7 +25,7 @@ public class ClassicGridBuilder implements GridBuilder{
 
         HashMap<String, List<LineShape>> lines = shapeBuilder.buildLinesFromCases(cases);
 
-        List<SquareShape> squares = shapeBuilder.buildSquaresFromCases(cases);
+        HashMap<Integer, List<SquareShape>> squares = shapeBuilder.buildSquaresFromCases(cases, gridCreationDTO.getSquareSize());
 
         System.out.println(Arrays.deepToString(cases));
 //        System.out.println(lines);

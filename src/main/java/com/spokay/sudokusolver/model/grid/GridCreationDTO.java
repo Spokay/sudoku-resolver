@@ -15,4 +15,7 @@ public class GridCreationDTO {
 
     @NonNull
     private String gridStringData;
+
+    @NonNull
+    private Integer squareSize;
 }

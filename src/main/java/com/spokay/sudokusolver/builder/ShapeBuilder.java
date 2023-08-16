@@ -43,14 +43,19 @@ public class ShapeBuilder {
                 columnLines.get(x).getLineCases()[y] = cases[y][x];
             }
         }
-        Arrays.stream(columnLines.get(8).getLineCases()).forEach(e -> System.out.println(e.getValue() + "\n"));
 
+        // fill the lines HashMap
         lines.put("rows", rowsLines);
         lines.put("columns", columnLines);
         return lines;
     }
 
-    public List<SquareShape> buildSquaresFromCases(Case[][] cases) {
+    public HashMap<Integer, List<SquareShape>> buildSquaresFromCases(Case[][] cases, Integer squareSize) {
+        HashMap<Integer, List<SquareShape>> squares = new HashMap<>();
+        /*squares.forEach(e -> {
+            List<SquareShape> squareRow = new ArrayList<>();
+            squareSize
+        });*/
         return null;
     }
 }
