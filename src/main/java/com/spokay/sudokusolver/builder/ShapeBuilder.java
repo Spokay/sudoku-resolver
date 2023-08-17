@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Service
 public class ShapeBuilder {
@@ -52,10 +53,28 @@ public class ShapeBuilder {
 
     public HashMap<Integer, List<SquareShape>> buildSquaresFromCases(Case[][] cases, Integer squareSize) {
         HashMap<Integer, List<SquareShape>> squares = new HashMap<>();
-        /*squares.forEach(e -> {
-            List<SquareShape> squareRow = new ArrayList<>();
-            squareSize
-        });*/
+
+        int squaresPerRows = cases.length / squareSize;
+        // initialize the correct number of SquaresShape
+        for (int rowGroupIndex = 0; rowGroupIndex < squaresPerRows; rowGroupIndex++) {
+            List<SquareShape> squaresShapesInRowGroup = new ArrayList<>();
+
+            IntStream.of(squaresPerRows).forEach(i -> {
+                Case[][] casesInSquare = new Case[squareSize][squareSize];
+                SquareShape squareShape = SquareShape.builder().cases(cases).build();
+                squaresShapesInRowGroup.add(squareShape);
+            });
+
+            squares.put(rowGroupIndex, squaresShapesInRowGroup);
+        }
+
+        System.out.println(squares);
+        /*for (int y = 0; y < cases.length; y++) {
+
+             for (int x = 0; x < cases[y].length; x++) {
+                squares.get(y).;
+            }
+        }*/
         return null;
     }
 }
