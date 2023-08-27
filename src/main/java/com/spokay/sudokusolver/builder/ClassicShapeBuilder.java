@@ -6,13 +6,11 @@ import com.spokay.sudokusolver.model.shape.SquareShape;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.IntStream;
 
 @Service
-public class ShapeBuilder {
+public class ClassicShapeBuilder {
     public HashMap<String, List<LineShape>> buildLinesFromCases(Case[][] cases) {
         HashMap<String, List<LineShape>> lines = new HashMap<>();
         List<LineShape> rowsLines = new ArrayList<>();
@@ -59,22 +57,27 @@ public class ShapeBuilder {
         for (int rowGroupIndex = 0; rowGroupIndex < squaresPerRows; rowGroupIndex++) {
             List<SquareShape> squaresShapesInRowGroup = new ArrayList<>();
 
-            IntStream.of(squaresPerRows).forEach(i -> {
+            for (int columnGroupIndex = 0; columnGroupIndex < squaresPerRows; columnGroupIndex++) {
+                // initialize the cases of the SquareShape
                 Case[][] casesInSquare = new Case[squareSize][squareSize];
-                SquareShape squareShape = SquareShape.builder().cases(cases).build();
+                SquareShape squareShape = SquareShape.builder().cases(casesInSquare).build();
                 squaresShapesInRowGroup.add(squareShape);
-            });
-
+                // define where the array will start to be copied
+                int rowStart = rowGroupIndex == 0 ? 0 : rowGroupIndex == 1 ? squareSize : squareSize*2;
+                int columnStart = columnGroupIndex == 0 ? 0 : columnGroupIndex == 1 ? squareSize : squareSize*2;
+                // copy the cases to the casesInSquare array starting from rowStart and columnStart to square size length
+                fillCasesInSquare(cases, rowStart, columnStart, casesInSquare, squareSize);
+            }
             squares.put(rowGroupIndex, squaresShapesInRowGroup);
         }
 
-        System.out.println(squares);
-        /*for (int y = 0; y < cases.length; y++) {
+        return squares;
+    }
 
-             for (int x = 0; x < cases[y].length; x++) {
-                squares.get(y).;
-            }
-        }*/
-        return null;
+    private void fillCasesInSquare(Case[][] cases, int rowStart, int columnStart, Case[][] casesInSquare, int squareSize){
+        for (int j = 0; j < squareSize; j++){
+            System.arraycopy(cases[rowStart], columnStart, casesInSquare[j], 0, squareSize);
+            rowStart++;
+        }
     }
 }

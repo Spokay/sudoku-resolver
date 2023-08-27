@@ -1,7 +1,7 @@
 package com.spokay.sudokusolver.controller;
 
-import com.spokay.sudokusolver.builder.SudokuBuilder;
-import com.spokay.sudokusolver.model.SudokuGame;
+import com.spokay.sudokusolver.builder.ClassicSudokuBuilder;
+import com.spokay.sudokusolver.model.sudokugame.SudokuGame;
 import com.spokay.sudokusolver.model.grid.GridCreationDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,11 +17,11 @@ import java.io.IOException;
 @AllArgsConstructor
 public class SudokuController {
 
-    SudokuBuilder sudokuBuilder;
+    ClassicSudokuBuilder classicSudokuBuilder;
 
     @PostMapping("/start")
     public ModelAndView startSudoku(@Validated GridCreationDTO gridCreationDTO) throws IOException {
-        SudokuGame sudokuGame = sudokuBuilder.buildSudokuFromGridData(gridCreationDTO);
+        SudokuGame sudokuGame = classicSudokuBuilder.buildSudokuFromGridData(gridCreationDTO);
         return new ModelAndView("solved-sudoku").addObject(sudokuGame);
     }
 }

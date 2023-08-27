@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,18 +17,16 @@ import java.util.List;
 @AllArgsConstructor
 public class ClassicGridBuilder implements GridBuilder{
     CaseBuilder caseBuilder;
-    ShapeBuilder shapeBuilder;
+    ClassicShapeBuilder classicShapeBuilder;
     @Override
-    public Grid build(GridCreationDTO gridCreationDTO) throws IOException {
+    public ClassicGrid build(GridCreationDTO gridCreationDTO) throws IOException {
         Case[][] cases = caseBuilder.buildAllFromDataAndSize(gridCreationDTO.getGridStringData(), gridCreationDTO.getGridHeight(), gridCreationDTO.getGridWidth());
 
-        HashMap<String, List<LineShape>> lines = shapeBuilder.buildLinesFromCases(cases);
+        HashMap<String, List<LineShape>> lines = classicShapeBuilder.buildLinesFromCases(cases);
 
-        HashMap<Integer, List<SquareShape>> squares = shapeBuilder.buildSquaresFromCases(cases, gridCreationDTO.getSquareSize());
-
-        System.out.println(Arrays.deepToString(cases));
-//        System.out.println(lines);
-//        System.out.println(squares);
+        HashMap<Integer, List<SquareShape>> squares = classicShapeBuilder.buildSquaresFromCases(cases, gridCreationDTO.getSquareSize());
+        System.out.println(lines);
+        System.out.println(squares);
 
         return ClassicGrid.builder()
                 .cases(cases)
