@@ -20,13 +20,14 @@ public class ClassicGridBuilder implements GridBuilder{
     ClassicShapeBuilder classicShapeBuilder;
     @Override
     public ClassicGrid build(GridCreationDTO gridCreationDTO) throws IOException {
+        // build cases
         Case[][] cases = caseBuilder.buildAllFromDataAndSize(gridCreationDTO.getGridStringData(), gridCreationDTO.getGridHeight(), gridCreationDTO.getGridWidth());
 
+        // build the lines shapes of the grid
         HashMap<String, List<LineShape>> lines = classicShapeBuilder.buildLinesFromCases(cases);
 
+        // build the squares shapes of the grid
         HashMap<Integer, List<SquareShape>> squares = classicShapeBuilder.buildSquaresFromCases(cases, gridCreationDTO.getSquareSize());
-        System.out.println(lines);
-        System.out.println(squares);
 
         return ClassicGrid.builder()
                 .cases(cases)
