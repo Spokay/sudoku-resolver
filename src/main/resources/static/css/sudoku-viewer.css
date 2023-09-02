@@ -9,17 +9,37 @@
     border-collapse: collapse;
     display: flex;
     flex-wrap: wrap;
-    border: 2px solid dodgerblue;
+    border: 2px solid red;
+    border-left: none;
+    border-top: none;
 }
 .sudoku tr{
     display: flex;
     flex-wrap: wrap;
 }
 .sudoku td{
-    border: 2px solid dodgerblue;
+    border-left: 2px solid dodgerblue;
+    border-top: 2px solid dodgerblue;
     width: 60px;
     height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.sudoku .first-td{
+    border-left-color: red;
+}
+.sudoku .last-td{
+    border-right-color: red;
+}
+
+.sudoku .styled-td{
+    border-left-color: red;
+}
+
+.sudoku .styled-tr > td{
+    border-top-color: red;
+}
+.sudoku .first-tr > td{
+    border-top-color: red;
 }

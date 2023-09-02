@@ -26,6 +26,9 @@ public class SudokuController {
     public ModelAndView startSudoku(@Validated GridCreationDTO gridCreationDTO) throws IOException {
         ClassicSudokuGame sudokuGame = classicSudokuBuilder.buildSudokuFromGridData(gridCreationDTO);
         List<LineShape> sudokuRows = sudokuGame.getGrid().getLines().get("rows");
-        return new ModelAndView("sudoku-viewer").addObject("sudokuRows",sudokuRows);
+        Integer squareSize = gridCreationDTO.getSquareSize();
+        return new ModelAndView("sudoku-viewer")
+                .addObject("sudokuRows",sudokuRows)
+                .addObject("squareSize", squareSize);
     }
 }

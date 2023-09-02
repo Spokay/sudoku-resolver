@@ -12,8 +12,8 @@
     <div class="container">
         <table class="sudoku">
             <tbody>
-                <tr th:each="row: ${sudokuRows}">
-                    <td th:each="case: ${row.getLineCases()}" th:text="${case.getValue() != 0 ? case.getValue() : ''}"></td>
+                <tr th:each="row, rowIndex: ${sudokuRows}" th:class="${(rowIndex.first ? 'first-tr ' : '') + (rowIndex.last ? 'last-tr ' : '') +(rowIndex.index % 3 == 0 && !rowIndex.first ? 'styled-tr' : '')}">
+                    <td th:each="case, columnIndex: ${row.getLineCases()}" th:text="${case.getValue() != 0 ? case.getValue() : ''}" th:class="${(columnIndex.first ? 'first-td ' : '') + (columnIndex.last ? 'last-td ' : '') +(columnIndex.index % 3 == 0 && !columnIndex.first ? 'styled-td' : '')}"></td>
                 </tr>
             </tbody>
         </table>
