@@ -33,6 +33,7 @@ public class ClassicGridBuilder implements GridBuilder{
                 .cases(cases)
                 .lines(lines)
                 .squares(squares)
+                .squareSize(gridCreationDTO.getSquareSize())
                 .height(gridCreationDTO.getGridHeight())
                 .width(gridCreationDTO.getGridWidth())
                 .build();

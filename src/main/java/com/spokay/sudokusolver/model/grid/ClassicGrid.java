@@ -23,6 +23,7 @@ public class ClassicGrid implements Grid{
     private Case[][] cases;
     private Integer width;
     private Integer height;
+    private Integer squareSize;
     public LineShape getLineByRowNumber(Integer rowNumber){
         return lines.get("row").get(rowNumber);
     }

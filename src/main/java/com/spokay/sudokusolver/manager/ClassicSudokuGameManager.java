@@ -1,9 +1,11 @@
 package com.spokay.sudokusolver.manager;
 
-public class ClassicSudokuGameManager implements SudokuGameManager{
+import com.spokay.sudokusolver.model.sudokugame.ClassicSudokuGame;
+import org.springframework.stereotype.Service;
 
-    @Override
-    public void nextTurn() {
-
+@Service
+public class ClassicSudokuGameManager{
+    public void nextTurn(ClassicSudokuGame sudokuGame) {
+        System.out.println("game manager next turn called");
     }
 }
