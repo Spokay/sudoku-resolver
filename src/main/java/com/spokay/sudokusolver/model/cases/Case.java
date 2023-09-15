@@ -7,4 +7,5 @@ import lombok.Setter;
 @Setter
 public abstract class Case {
     protected Integer value;
+    protected int[] possibleValue;
 }

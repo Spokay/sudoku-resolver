@@ -1,5 +1,6 @@
 package com.spokay.sudokusolver.model.grid;
 
+import com.spokay.sudokusolver.builder.CaseBuilder;
 import com.spokay.sudokusolver.model.cases.Case;
 import com.spokay.sudokusolver.model.cases.EmptyCase;
 import com.spokay.sudokusolver.model.shape.LineShape;
@@ -33,14 +34,5 @@ public class ClassicGrid implements Grid{
 
     public Case getSpecificCase(Integer x, Integer y){
         return cases[y][x];
-    }
-    public ArrayList<Case> getAllCaseByType(String caseType, Case[][] allCases){
-        ArrayList<Case> operatedCases = new ArrayList<>();
-        Arrays.stream(allCases)
-                .forEach(caseArr -> Arrays.stream(caseArr)
-                        .filter(caseJ -> caseJ.getClass().getName().equals(caseType))
-                        .forEach(operatedCases::add)
-                );
-        return operatedCases;
     }
 }
