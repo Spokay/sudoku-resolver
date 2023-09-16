@@ -10,6 +10,7 @@ import com.spokay.sudokusolver.parser.GridStringDataParser;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Iterator;
 
 @Service
@@ -36,7 +37,11 @@ public class CaseBuilder {
             while(elements.hasNext()){
                 JsonNode xValue = elements.next();
                 // fill the cases array with the current iteration value
-                cases[Integer.parseInt(y.getKey())][xIndex] = xValue.intValue() == 0 ? new EmptyCase() : new FilledCase(xValue.intValue());
+                HashMap<String, Integer> coords = new HashMap<>();
+                coords.put("y", Integer.parseInt(y.getKey()));
+                coords.put("x", xIndex);
+                cases[Integer.parseInt(y.getKey())][xIndex] = xValue.intValue() == 0 ? new EmptyCase(coords) : new FilledCase(coords, xValue.intValue());
+
                 xIndex++;
             }
         });
