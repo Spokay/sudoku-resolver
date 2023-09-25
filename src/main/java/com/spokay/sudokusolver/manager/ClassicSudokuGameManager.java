@@ -1,13 +1,13 @@
 package com.spokay.sudokusolver.manager;
 
 import com.spokay.sudokusolver.model.cases.Case;
+import com.spokay.sudokusolver.model.cases.FilledCase;
 import com.spokay.sudokusolver.model.grid.ClassicGrid;
 import com.spokay.sudokusolver.model.sudokugame.ClassicSudokuGame;
 import com.spokay.sudokusolver.util.GridUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.IntStream;
 
 @Service
 public class ClassicSudokuGameManager{
@@ -35,14 +35,13 @@ public class ClassicSudokuGameManager{
         System.out.println(numberToCheck);
         List<Case> unclearedCasesForSpecificNumber = new ArrayList<>();
 
-        sudokuGrid.getLines().get("rows")
-        .forEach(lineShape -> {
+        sudokuGrid.getLines().get("rows").forEach(lineShape -> {
                     Arrays.stream(lineShape.getLineCases())
-                            .filter(caseInRow ->
-                                    !sudokuGrid.getLineByColumnNumber(caseInRow.getCoords().get("x")).containsNumber(numberToCheck)
+                            .filter(caseInRow -> !sudokuGrid.getLineByColumnNumber(caseInRow.getCoords().get("x")).containsNumber(numberToCheck) || !caseInRow.getClass().equals(FilledCase.class)
                             ).forEach(unclearedCasesForSpecificNumber::add);
                 }
         );
+
         System.out.println(unclearedCasesForSpecificNumber);
         // possible values = not in the rows and columns next to the square
         // todo: its not working :(

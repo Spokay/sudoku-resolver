@@ -26,10 +26,10 @@ public class ClassicGrid implements Grid{
     private Integer height;
     private Integer squareSize;
     public LineShape getLineByRowNumber(Integer rowNumber){
-        return lines.get("row").get(rowNumber);
+        return lines.get("rows").get(rowNumber);
     }
     public LineShape getLineByColumnNumber(Integer columnNumber){
-        return lines.get("column").get(columnNumber);
+        return lines.get("columns").get(columnNumber);
     }
 
     public Case getSpecificCase(Integer x, Integer y){
