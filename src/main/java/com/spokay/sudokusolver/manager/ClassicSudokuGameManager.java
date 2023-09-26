@@ -37,7 +37,7 @@ public class ClassicSudokuGameManager{
 
         sudokuGrid.getLines().get("rows").forEach(lineShape -> {
                     Arrays.stream(lineShape.getLineCases())
-                            .filter(caseInRow -> !sudokuGrid.getLineByColumnNumber(caseInRow.getCoords().get("x")).containsNumber(numberToCheck) || !caseInRow.getClass().equals(FilledCase.class)
+                            .filter(caseInRow -> !sudokuGrid.getLineByColumnNumber(caseInRow.getCoords().get("x")).containsNumber(numberToCheck) && !caseInRow.getClass().equals(FilledCase.class)
                             ).forEach(unclearedCasesForSpecificNumber::add);
                 }
         );
