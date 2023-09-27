@@ -1,8 +1,8 @@
 package com.spokay.sudokusolver.manager;
 
-import com.spokay.sudokusolver.model.cases.Case;
 import com.spokay.sudokusolver.model.cases.CaseState;
 import com.spokay.sudokusolver.model.grid.ClassicGrid;
+import com.spokay.sudokusolver.model.shape.LineShape;
 import com.spokay.sudokusolver.model.sudokugame.ClassicSudokuGame;
 import com.spokay.sudokusolver.util.GridUtils;
 import org.springframework.stereotype.Service;
@@ -38,16 +38,14 @@ public class ClassicSudokuGameManager{
 
     public void checkSinglesForSpecificNumberInLine(ClassicGrid sudokuGrid, Integer numberToCheck, String direction){
         String axis = Objects.equals(direction, "rows") ? "x" : "y";
-        sudokuGrid.getLines().get(direction).forEach(lineShape -> {
-                    Arrays.stream(lineShape.getLineCases())
-                            .filter(
-                                    caseInRow -> GridUtils.isTheLastEmptyCaseInLine(sudokuGrid, numberToCheck, caseInRow, axis) && caseInRow.isEmpty()
-                            ).forEach(caseInRow -> {
-                                caseInRow.setValue(numberToCheck);
-                                caseInRow.setCaseState(CaseState.FILLED_CASE);
-                            });
-                }
-        );
+        sudokuGrid.getLines().get(direction).stream()
+                .filter(LineShape::hasOneEmptyCaseRemaining)
+                .forEach(lineShape -> lineShape.getFirstEmptyCase()
+                        .ifPresent(caseFound -> {
+                            caseFound.setValue(GridUtils.getFirstMissingNumber(sudokuGrid, lineShape).orElseThrow());
+                            caseFound.setCaseState(CaseState.FILLED_CASE);
+                        })
+                );
         /*sudokuGrid.getLines().get("rows").forEach(lineShape -> {
                     Arrays.stream(lineShape.getLineCases())
                             .filter(caseInRow -> !sudokuGrid.getLineByColumnNumber(caseInRow.getCoords().get("x")).containsNumber(numberToCheck) && !caseInRow.getClass().equals(FilledCase.class)

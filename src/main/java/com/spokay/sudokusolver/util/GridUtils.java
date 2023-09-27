@@ -3,19 +3,26 @@ package com.spokay.sudokusolver.util;
 import com.spokay.sudokusolver.model.cases.Case;
 import com.spokay.sudokusolver.model.cases.CaseState;
 import com.spokay.sudokusolver.model.grid.ClassicGrid;
+import com.spokay.sudokusolver.model.shape.LineShape;
 import com.spokay.sudokusolver.model.shape.SquareShape;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class GridUtils {
     public static boolean isTheLastEmptyCaseInLine(ClassicGrid sudokuGrid, Integer numberToCheck, Case caseChecked, String axis){
-        return !sudokuGrid.getLineByColumnNumber(caseChecked.getCoords().get(axis)).containsNumber(numberToCheck) && !sudokuGrid.getLineByColumnNumber(caseChecked.getCoords().get(axis)).hasOneEmptyCaseRemaining();
+        return (!sudokuGrid.getLineByColumnNumber(caseChecked.getCoords().get(axis)).containsNumber(numberToCheck)) && (sudokuGrid.getLineByColumnNumber(caseChecked.getCoords().get(axis)).hasOneEmptyCaseRemaining()) && (caseChecked.isEmpty());
     }
+
+     public static Optional<Integer> getFirstMissingNumber(ClassicGrid grid, LineShape lineShape){
+        for (int i = 1; i <= grid.getWidth(); i++) {
+            if (!lineShape.containsNumber(i)){
+                return Optional.of(i);
+            }
+        }
+         return Optional.empty();
+     }
 
     public static ArrayList<Case> getAllCaseByType(CaseState caseState, Case[][] allCases){
         ArrayList<Case> operatedCases = new ArrayList<>();

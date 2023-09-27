@@ -31,7 +31,7 @@ public class ClassicGrid implements Grid{
         return lines.get("columns").get(columnNumber);
     }
 
-    public Case getSpecificCase(Integer x, Integer y){
+    public Case getSpecificCase(Integer y, Integer x){
         return cases[y][x];
     }
 }
