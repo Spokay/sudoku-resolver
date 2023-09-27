@@ -1,15 +1,14 @@
 package com.spokay.sudokusolver.model.grid;
 
-import com.spokay.sudokusolver.builder.CaseBuilder;
 import com.spokay.sudokusolver.model.cases.Case;
-import com.spokay.sudokusolver.model.cases.EmptyCase;
 import com.spokay.sudokusolver.model.shape.LineShape;
 import com.spokay.sudokusolver.model.shape.SquareShape;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 

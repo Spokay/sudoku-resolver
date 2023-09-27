@@ -1,7 +1,8 @@
 package com.spokay.sudokusolver.util;
 
 import com.spokay.sudokusolver.model.cases.Case;
-import com.spokay.sudokusolver.model.cases.EmptyCase;
+import com.spokay.sudokusolver.model.cases.CaseState;
+import com.spokay.sudokusolver.model.grid.ClassicGrid;
 import com.spokay.sudokusolver.model.shape.SquareShape;
 
 import java.util.ArrayList;
@@ -12,11 +13,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class GridUtils {
-    public static ArrayList<Case> getAllCaseByType(String caseType, Case[][] allCases){
+    public static boolean isTheLastEmptyCaseInLine(ClassicGrid sudokuGrid, Integer numberToCheck, Case caseChecked, String axis){
+        return !sudokuGrid.getLineByColumnNumber(caseChecked.getCoords().get(axis)).containsNumber(numberToCheck) && !sudokuGrid.getLineByColumnNumber(caseChecked.getCoords().get(axis)).hasOneEmptyCaseRemaining();
+    }
+
+    public static ArrayList<Case> getAllCaseByType(CaseState caseState, Case[][] allCases){
         ArrayList<Case> operatedCases = new ArrayList<>();
         Arrays.stream(allCases)
                 .forEach(caseArr -> Arrays.stream(caseArr)
-                        .filter(caseJ -> caseJ.getClass().getName().equals(caseType))
+                        .filter(caseJ -> caseJ.getCaseState().equals(caseState))
                         .forEach(operatedCases::add)
                 );
         return operatedCases;
@@ -30,7 +35,7 @@ public class GridUtils {
             AtomicInteger counter = new AtomicInteger();
             Arrays.stream(cases)
                     .forEach(caseArr -> Arrays.stream(caseArr)
-                        .filter(caseJ -> !caseJ.getClass().equals(EmptyCase.class) && caseJ.getValue() == finalI)
+                        .filter(caseJ -> !caseJ.isEmpty() && caseJ.getValue() == finalI)
                         .forEach(caseJ -> counter.getAndIncrement())
                 );
 

@@ -1,7 +1,7 @@
 package com.spokay.sudokusolver.manager;
 
 import com.spokay.sudokusolver.model.cases.Case;
-import com.spokay.sudokusolver.model.cases.FilledCase;
+import com.spokay.sudokusolver.model.cases.CaseState;
 import com.spokay.sudokusolver.model.grid.ClassicGrid;
 import com.spokay.sudokusolver.model.sudokugame.ClassicSudokuGame;
 import com.spokay.sudokusolver.util.GridUtils;
@@ -13,7 +13,11 @@ import java.util.*;
 public class ClassicSudokuGameManager{
     public void nextTurn(ClassicSudokuGame sudokuGame) {
         System.out.println("game manager next turn called");
-
+        /* execute the instructions in this order :
+        - check if there is a single values
+        - check deeper with elimination
+        - TBD
+        */
         checkAllSingles(sudokuGame.getGrid());
     }
 
@@ -28,25 +32,28 @@ public class ClassicSudokuGameManager{
         list.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
 
         // check the Singles for each numbers in descending order (max -> min)
-        list.forEach(pair -> checkSinglesForSpecificNumber(sudokuGrid, pair.getKey()));
+        list.forEach(pair -> checkSinglesForSpecificNumberInLine(sudokuGrid, pair.getKey(), "rows"));
+        list.forEach(pair -> checkSinglesForSpecificNumberInLine(sudokuGrid, pair.getKey(), "columns"));
     }
 
-    public List<Case> checkSinglesForSpecificNumber(ClassicGrid sudokuGrid, Integer numberToCheck){
-        System.out.println(numberToCheck);
-        List<Case> unclearedCasesForSpecificNumber = new ArrayList<>();
-
-        sudokuGrid.getLines().get("rows").forEach(lineShape -> {
+    public void checkSinglesForSpecificNumberInLine(ClassicGrid sudokuGrid, Integer numberToCheck, String direction){
+        String axis = Objects.equals(direction, "rows") ? "x" : "y";
+        sudokuGrid.getLines().get(direction).forEach(lineShape -> {
                     Arrays.stream(lineShape.getLineCases())
-                            .filter(caseInRow -> !sudokuGrid.getLineByColumnNumber(caseInRow.getCoords().get("x")).containsNumber(numberToCheck) && !caseInRow.getClass().equals(FilledCase.class)
-                            ).forEach(unclearedCasesForSpecificNumber::add);
+                            .filter(
+                                    caseInRow -> GridUtils.isTheLastEmptyCaseInLine(sudokuGrid, numberToCheck, caseInRow, axis) && caseInRow.isEmpty()
+                            ).forEach(caseInRow -> {
+                                caseInRow.setValue(numberToCheck);
+                                caseInRow.setCaseState(CaseState.FILLED_CASE);
+                            });
                 }
         );
+        /*sudokuGrid.getLines().get("rows").forEach(lineShape -> {
+                    Arrays.stream(lineShape.getLineCases())
+                            .filter(caseInRow -> !sudokuGrid.getLineByColumnNumber(caseInRow.getCoords().get("x")).containsNumber(numberToCheck) && !caseInRow.getClass().equals(FilledCase.class)
+                            ).forEach(caseInRow -> caseInRow.getPossibleValue().add(numberToCheck));
+                }
+        );*/
 
-        System.out.println(unclearedCasesForSpecificNumber);
-        // possible values = not in the rows and columns next to the square
-        // todo: its not working :(
-        // if no number in the line and column does not contains it
-
-        return unclearedCasesForSpecificNumber;
     }
 }

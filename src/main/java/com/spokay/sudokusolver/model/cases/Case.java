@@ -1,18 +1,26 @@
 package com.spokay.sudokusolver.model.cases;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Getter
 @Setter
-public abstract class Case {
-    protected Integer value;
-    protected int[] possibleValue;
-    protected HashMap<String, Integer> coords = new HashMap<>();
+@Builder
+public class Case {
+    public CaseState caseState;
+    private Integer value;
+    private List<Integer> possibleValue;
+    private HashMap<String, Integer> coords;
 
-    public Case(HashMap<String, Integer> coords){
-        this.setCoords(coords);
+    public boolean isEmpty(){
+        return caseState.equals(CaseState.EMPTY_CASE);
+    }
+    @Override
+    public String toString() {
+        return caseState.toString().concat(" "+getValue());
     }
 }

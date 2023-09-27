@@ -4,8 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.spokay.sudokusolver.model.cases.Case;
-import com.spokay.sudokusolver.model.cases.EmptyCase;
-import com.spokay.sudokusolver.model.cases.FilledCase;
+import com.spokay.sudokusolver.model.cases.CaseState;
 import com.spokay.sudokusolver.parser.GridStringDataParser;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,7 +39,7 @@ public class CaseBuilder {
                 HashMap<String, Integer> coords = new HashMap<>();
                 coords.put("y", Integer.parseInt(y.getKey()));
                 coords.put("x", xIndex);
-                cases[Integer.parseInt(y.getKey())][xIndex] = xValue.intValue() == 0 ? new EmptyCase(coords) : new FilledCase(coords, xValue.intValue());
+                cases[Integer.parseInt(y.getKey())][xIndex] = xValue.intValue() == 0 ? Case.builder().coords(coords).value(0).caseState(CaseState.EMPTY_CASE).build() : Case.builder().coords(coords).value(xValue.intValue()).caseState(CaseState.FILLED_CASE).build();
 
                 xIndex++;
             }
