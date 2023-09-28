@@ -1,7 +1,6 @@
 package com.spokay.sudokusolver.model.shape;
 
 import com.spokay.sudokusolver.model.cases.Case;
-import com.spokay.sudokusolver.model.grid.ClassicGrid;
 import lombok.*;
 
 import java.util.Arrays;

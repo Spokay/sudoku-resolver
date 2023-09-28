@@ -4,6 +4,7 @@ import com.spokay.sudokusolver.model.cases.Case;
 import com.spokay.sudokusolver.model.cases.CaseState;
 import com.spokay.sudokusolver.model.grid.ClassicGrid;
 import com.spokay.sudokusolver.model.shape.LineShape;
+import com.spokay.sudokusolver.model.shape.Shape;
 import com.spokay.sudokusolver.model.shape.SquareShape;
 
 import java.util.*;
@@ -12,12 +13,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class GridUtils {
     public static boolean isTheLastEmptyCaseInLine(ClassicGrid sudokuGrid, Integer numberToCheck, Case caseChecked, String axis){
-        return (!sudokuGrid.getLineByColumnNumber(caseChecked.getCoords().get(axis)).containsNumber(numberToCheck)) && (sudokuGrid.getLineByColumnNumber(caseChecked.getCoords().get(axis)).hasOneEmptyCaseRemaining()) && (caseChecked.isEmpty());
+        return (sudokuGrid.getLineByColumnNumber(caseChecked.getCoords().get(axis)).containsNumber(numberToCheck)) && (sudokuGrid.getLineByColumnNumber(caseChecked.getCoords().get(axis)).hasOneEmptyCaseRemaining()) && (caseChecked.isEmpty());
     }
 
-     public static Optional<Integer> getFirstMissingNumber(ClassicGrid grid, LineShape lineShape){
-        for (int i = 1; i <= grid.getWidth(); i++) {
-            if (!lineShape.containsNumber(i)){
+     public static Optional<Integer> getFirstMissingNumberInShape(Integer maxValue, Shape shape){
+        for (int i = 1; i <= maxValue; i++) {
+            System.out.println(i);
+            System.out.println(shape.containsNumber(i));
+            if (!shape.containsNumber(i)){
                 return Optional.of(i);
             }
         }
