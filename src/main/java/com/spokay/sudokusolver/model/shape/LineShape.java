@@ -4,8 +4,10 @@ import com.spokay.sudokusolver.model.cases.Case;
 import lombok.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Getter
 @Setter
@@ -20,11 +22,21 @@ public class LineShape implements Shape{
                 .anyMatch(caseInArray -> Objects.equals(caseInArray.getValue(), numberToCheck));
     }
 
-    public boolean hasOneEmptyCaseRemaining() {
+    public boolean hasSinglesPossibilitiesRemaining() {
+        Stream<Case> emptyCases = Arrays.stream(lineCases)
+            .filter(Case::isEmpty);
+
+        List<Case> singlePossibilities = emptyCases
+                .filter(emptyCase -> emptyCase.getPossibleValue().size() == 1)
+                .toList();
+
+        return !singlePossibilities.isEmpty();
+    }
+
+    public boolean hasOneEmptyCaseRemaining(){
         return Arrays.stream(lineCases)
             .filter(Case::isEmpty).toList().size() == 1;
     }
-
     public Optional<Case> getFirstEmptyCase() {
         return Arrays.stream(lineCases).filter(Case::isEmpty).findFirst();
     }

@@ -60,4 +60,11 @@ public class SudokuController {
 
         return new ModelAndView("redirect:/sudoku/"+ id);
     }
+
+    ModelAndView resolveAll(@PathVariable Integer id) {
+        ClassicSudokuGame sudokuGame = sudokuHolder.getSudokuHoldedById(id);
+        sudokuGameManager.resolveAllCases(sudokuGame);
+
+        return new ModelAndView("redirect:/sudoku/" + id);
+    }
 }

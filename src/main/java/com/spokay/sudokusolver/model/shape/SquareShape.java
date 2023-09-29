@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class SquareShape implements Shape{
     Case[][] cases;
 
-    public boolean hasOneEmptyCaseRemaining(){
+    public boolean hasOnePossibilityRemaining(){
         List<Case> emptyCases = GridUtils.getAllCaseByType(CaseState.EMPTY_CASE, cases);
 
         return emptyCases.size() == 1;
