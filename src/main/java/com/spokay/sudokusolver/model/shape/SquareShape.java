@@ -5,6 +5,7 @@ import com.spokay.sudokusolver.model.cases.CaseState;
 import com.spokay.sudokusolver.util.GridUtils;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -18,10 +19,21 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class SquareShape implements Shape{
     Case[][] cases;
 
-    public boolean hasOnePossibilityRemaining(){
+    @Override
+    public boolean hasOneEmptyCaseRemaining() {
         List<Case> emptyCases = GridUtils.getAllCaseByType(CaseState.EMPTY_CASE, cases);
 
         return emptyCases.size() == 1;
+    }
+
+    @Override
+    public boolean hasSinglesPossibilitiesRemaining() {
+        AtomicBoolean hasSinglePossibilities = new AtomicBoolean();
+        Arrays.stream(cases).forEach(caseRow -> Arrays.stream(caseRow)
+                .filter(caseInRow -> caseInRow.getPossibleValue().size() == 1)
+                .forEach(singlePossibilityFound -> hasSinglePossibilities.set(true))
+        );
+        return hasSinglePossibilities.get();
     }
 
     public Optional<Case> getFirstEmptyCase() {
@@ -37,5 +49,14 @@ public class SquareShape implements Shape{
                 .forEach(caseInRow -> containsNumber.set(true))
         );
         return containsNumber.get();
+    }
+
+    public List<Case> getSinglePossibilitiesCase() {
+        List<Case> singlePossibilitiesCases = new ArrayList<>();
+        Arrays.stream(cases).forEach(caseRow -> Arrays.stream(caseRow)
+                .filter(caseInRow -> caseInRow.getPossibleValue().size() == 1)
+                .forEach(singlePossibilitiesCases::add)
+        );
+        return singlePossibilitiesCases;
     }
 }

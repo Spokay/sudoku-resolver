@@ -9,10 +9,11 @@ import com.spokay.sudokusolver.parser.GridStringDataParser;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
+import java.util.stream.IntStream;
 
 @Service
 @AllArgsConstructor
@@ -41,7 +42,8 @@ public class CaseBuilder {
                 HashMap<String, Integer> coords = new HashMap<>();
                 coords.put("y", Integer.parseInt(y.getKey()));
                 coords.put("x", xIndex);
-                List<Integer> possibilities = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
+                Set<Integer> possibilities = new HashSet<>();
+                IntStream.range(1, gridWidth + 1).forEach(possibilities::add);
                 cases[Integer.parseInt(y.getKey())][xIndex] = xValue.intValue() == 0 ? Case.builder().coords(coords).value(0).caseState(CaseState.EMPTY_CASE).possibleValue(possibilities).build() : Case.builder().coords(coords).value(xValue.intValue()).caseState(CaseState.FILLED_CASE).build();
 
                 xIndex++;

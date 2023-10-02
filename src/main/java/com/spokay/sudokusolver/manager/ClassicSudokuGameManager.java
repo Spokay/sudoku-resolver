@@ -1,25 +1,17 @@
 package com.spokay.sudokusolver.manager;
 
-import com.spokay.sudokusolver.manager.checks.PossibilityChecker;
+import com.spokay.sudokusolver.manager.checks.SinglePossibilityChecker;
 import com.spokay.sudokusolver.manager.checks.PossibilityEliminator;
 import com.spokay.sudokusolver.manager.checks.SingleEmptyChecker;
-import com.spokay.sudokusolver.model.cases.CaseState;
-import com.spokay.sudokusolver.model.grid.ClassicGrid;
-import com.spokay.sudokusolver.model.shape.LineShape;
-import com.spokay.sudokusolver.model.shape.SquareShape;
 import com.spokay.sudokusolver.model.sudokugame.ClassicSudokuGame;
-import com.spokay.sudokusolver.util.GridUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
-import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
 public class ClassicSudokuGameManager{
 
-    PossibilityChecker possibilityChecker;
+    SinglePossibilityChecker singlePossibilityChecker;
 
     SingleEmptyChecker singleEmptyChecker;
 
@@ -35,17 +27,17 @@ public class ClassicSudokuGameManager{
 
 
         // First check is there is any single empty cases in lines or squares
-        int singleCheckResult = singleEmptyChecker.checkAllSingles(sudokuGame.getGrid());
+        int singleCheckResult = singleEmptyChecker.checkAllShapeType(sudokuGame.getGrid());
         if (singleCheckResult > 0){
             return singleCheckResult;
         }
 
-        int singlePossibilityCheckResult = possibilityChecker.checkAllSinglePossibility();
+        int singlePossibilityCheckResult = singlePossibilityChecker.checkAllShapeType(sudokuGame.getGrid());
         if (singlePossibilityCheckResult > 0){
             return singlePossibilityCheckResult;
         }
         // If no single is found eliminate possibilities
-        possibilityEliminator.eliminatePossibilities(sudokuGame.getGrid());
+        possibilityEliminator.eliminateAllPossibilities(sudokuGame.getGrid());
 
         // increment the number of turn spend on the sudoku
         sudokuGame.setTurn(sudokuGame.getTurn() + 1);

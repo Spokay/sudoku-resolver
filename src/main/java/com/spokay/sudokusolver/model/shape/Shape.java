@@ -5,7 +5,8 @@ import com.spokay.sudokusolver.model.cases.Case;
 import java.util.Optional;
 
 public interface Shape {
-    boolean hasOnePossibilityRemaining();
+    boolean hasOneEmptyCaseRemaining();
+    boolean hasSinglesPossibilitiesRemaining();
     Optional<Case> getFirstEmptyCase();
     boolean containsNumber(Integer numberToCheck);
 }

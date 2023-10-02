@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashMap;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -13,11 +13,14 @@ import java.util.List;
 public class Case {
     public CaseState caseState;
     private Integer value;
-    private List<Integer> possibleValue;
+    private Set<Integer> possibleValue;
     private HashMap<String, Integer> coords;
 
     public boolean isEmpty(){
         return caseState.equals(CaseState.EMPTY_CASE);
+    }
+    public int getLastPossibility(){
+        return possibleValue.stream().findFirst().orElseThrow();
     }
     @Override
     public String toString() {

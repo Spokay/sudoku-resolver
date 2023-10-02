@@ -40,4 +40,13 @@ public class LineShape implements Shape{
     public Optional<Case> getFirstEmptyCase() {
         return Arrays.stream(lineCases).filter(Case::isEmpty).findFirst();
     }
+
+    public List<Case> getSinglePossibilitiesCase() {
+        Stream<Case> emptyCases = Arrays.stream(lineCases)
+            .filter(Case::isEmpty);
+
+        return emptyCases
+                .filter(emptyCase -> emptyCase.getPossibleValue().size() == 1)
+                .toList();
+    }
 }

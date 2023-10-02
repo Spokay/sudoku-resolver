@@ -11,22 +11,23 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
-public class SingleEmptyChecker {
-    public int checkAllSingles(ClassicGrid sudokuGrid){
+public class SingleEmptyChecker implements Checker{
+    @Override
+    public int checkAllShapeType(ClassicGrid sudokuGrid){
         // check the Singles in each line and fill them if found
-        int singleInRowResult = checkSinglesInLine(sudokuGrid, "rows");
-        int singleInColumnResult = checkSinglesInLine(sudokuGrid, "columns");
+        int singleInRowResult = checkLineShape(sudokuGrid, "rows");
+        int singleInColumnResult = checkLineShape(sudokuGrid, "columns");
         // check the Singles in each squares
-        int singleInSquareResult = checkSinglesInSquares(sudokuGrid);
+        int singleInSquareResult = checkSquareShape(sudokuGrid);
         return singleInRowResult + singleInColumnResult + singleInSquareResult;
     }
 
-    private int checkSinglesInSquares(ClassicGrid sudokuGrid) {
+    public int checkSquareShape(ClassicGrid sudokuGrid) {
         AtomicInteger singlesFound = new AtomicInteger();
         for (int row = 0; row < sudokuGrid.getSquares().size(); row++) {
             sudokuGrid.getSquares().get(row)
                     .stream()
-                    .filter(SquareShape::hasOnePossibilityRemaining)
+                    .filter(SquareShape::hasOneEmptyCaseRemaining)
                     .forEach(squareInRow -> squareInRow.getFirstEmptyCase()
                         .ifPresent(caseFound -> {
                             singlesFound.getAndIncrement();
@@ -37,8 +38,8 @@ public class SingleEmptyChecker {
         }
         return singlesFound.get();
     }
-
-    public int checkSinglesInLine(ClassicGrid sudokuGrid, String direction){
+    @Override
+    public int checkLineShape(ClassicGrid sudokuGrid, String direction){
         String axis = Objects.equals(direction, "rows") ? "x" : "y";
         AtomicInteger singlesFound = new AtomicInteger();
         sudokuGrid.getLines().get(direction).stream()
