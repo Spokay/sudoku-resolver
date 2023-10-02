@@ -28,14 +28,16 @@ public class PossibilityEliminator {
 
     private void eliminatePossibilitiesInLine(ClassicGrid sudokuGrid, Integer numberToCheck, String direction) {
         List<LineShape> linesInDirection = sudokuGrid.getLines().get(direction);
-        for (LineShape lineShape: linesInDirection) {
-            Case[] cases = lineShape.getLineCases();
-            for (int i = 0; i < cases.length; i++) {
-                LineShape opposedDirectionLine = direction.equals("rows") ? sudokuGrid.getLineByColumnNumber(i) : sudokuGrid.getLineByRowNumber(i);
-                // check if the opposite axis line contains the value of numberToCheck
-
-            }
-        }
+        linesInDirection.forEach(
+                lineShape -> Arrays.stream(lineShape.getLineCases())
+                        .filter(Case::isEmpty)
+                        .forEach(caseInLine -> {
+                            LineShape oppositeAxisLine = direction.equals("rows") ? sudokuGrid.getLineByColumnNumber(caseInLine.getCoords().get("x")) : sudokuGrid.getLineByRowNumber(caseInLine.getCoords().get("y"));
+                            if (oppositeAxisLine.containsNumber(numberToCheck)){
+                                caseInLine.getPossibleValue().remove(numberToCheck);
+                            }
+                        })
+        );
     }
 
 }

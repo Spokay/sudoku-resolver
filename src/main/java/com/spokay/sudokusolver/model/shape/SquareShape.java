@@ -29,10 +29,11 @@ public class SquareShape implements Shape{
     @Override
     public boolean hasSinglesPossibilitiesRemaining() {
         AtomicBoolean hasSinglePossibilities = new AtomicBoolean();
-        Arrays.stream(cases).forEach(caseRow -> Arrays.stream(caseRow)
+
+        List<Case> emptyCases = GridUtils.getAllCaseByType(CaseState.EMPTY_CASE, cases);
+        emptyCases.stream()
                 .filter(caseInRow -> caseInRow.getPossibleValue().size() == 1)
-                .forEach(singlePossibilityFound -> hasSinglePossibilities.set(true))
-        );
+                .forEach(singlePossibilityFound -> hasSinglePossibilities.set(true));
         return hasSinglePossibilities.get();
     }
 
@@ -53,10 +54,10 @@ public class SquareShape implements Shape{
 
     public List<Case> getSinglePossibilitiesCase() {
         List<Case> singlePossibilitiesCases = new ArrayList<>();
-        Arrays.stream(cases).forEach(caseRow -> Arrays.stream(caseRow)
+        List<Case> emptyCases = GridUtils.getAllCaseByType(CaseState.EMPTY_CASE, cases);
+        emptyCases.stream()
                 .filter(caseInRow -> caseInRow.getPossibleValue().size() == 1)
-                .forEach(singlePossibilitiesCases::add)
-        );
+                .forEach(singlePossibilitiesCases::add);
         return singlePossibilitiesCases;
     }
 }
