@@ -6,44 +6,32 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sudoku Solver</title>
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/css/sudoku-viewer.css}">
 </head>
 <body>
 
 <form th:action="@{/sudoku/start}" method="post">
-    <label for="gridWidth">Grid Width</label>
-    <select name="gridWidth" id="gridWidth">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9" selected>9</option>
-    </select>
 
-    <label for="gridHeight">Grid Height</label>
-    <select name="gridHeight" id="gridHeight">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9" selected>9</option>
+    <label for="gridSize">Grid Size</label>
+    <select name="gridSize" id="gridSize">
+        <option value="9" selected>9x9</option>
+        <option value="6">6x6</option>
+        <option value="3">3x3</option>
     </select>
+    <input type="hidden" name="gridStringData" id="gridStringData">
 
-    <label for="squareSize">Squares Size</label>
-    <select name="squareSize" id="squareSize">
-        <option value="3" selected>3</option>
-    </select>
-    <input type="text" name="gridStringData" id="gridStringData" value="{'0': [3,4,5,0,9,0,0,0,8], '1': [6,1,2,0,8,3,5,4,9], '2': [7,9,0,0,4,5,0,0,6], '3': [0,0,0,1,5,7,0,0,0], '4': [0,0,0,0,6,4,9,0,0], '5': [0,7,1,9,0,2,4,0,0], '6': [0,0,9,0,2,0,6,0,4], '7': [0,5,0,0,1,0,0,0,0], '8': [2,0,6,0,7,0,3,0,0]}">
-    <input type="submit" value="resolve">
+    <input type="submit" value="resolve" id="submitBtn">
+
+
 </form>
 
+<div class="container">
+    <div class="sudoku">
 
+    </div>
+</div>
+
+<script th:src="@{/js/grid-sandbox.js}"></script>
 </body>
 </html>
