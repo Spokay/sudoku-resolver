@@ -40,7 +40,6 @@ public class SingleEmptyChecker implements Checker{
     }
     @Override
     public int checkLineShape(ClassicGrid sudokuGrid, String direction){
-        String axis = Objects.equals(direction, "rows") ? "x" : "y";
         AtomicInteger singlesFound = new AtomicInteger();
         sudokuGrid.getLines().get(direction).stream()
                 .filter(LineShape::hasOneEmptyCaseRemaining)

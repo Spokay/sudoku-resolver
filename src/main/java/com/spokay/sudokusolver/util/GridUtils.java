@@ -18,8 +18,6 @@ public class GridUtils {
 
      public static Optional<Integer> getFirstMissingNumberInShape(Integer maxValue, Shape shape){
         for (int i = 1; i <= maxValue; i++) {
-            System.out.println(i);
-            System.out.println(shape.containsNumber(i));
             if (!shape.containsNumber(i)){
                 return Optional.of(i);
             }

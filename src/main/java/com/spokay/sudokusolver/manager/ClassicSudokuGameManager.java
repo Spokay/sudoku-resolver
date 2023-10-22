@@ -42,12 +42,12 @@ public class ClassicSudokuGameManager{
         // increment the number of turn spend on the sudoku
         sudokuGame.setTurn(sudokuGame.getTurn() + 1);
 
-         return singleCheckResult;
+         return singleCheckResult + singlePossibilityCheckResult;
     }
 
 
     public void resolveAllCases(ClassicSudokuGame sudokuGame) {
-        while(!sudokuGame.isFinished() || sudokuGame.getTurn() >= 100){
+        while(!sudokuGame.isFinished() && sudokuGame.getTurn() < 100){
             int turnResult = nextTurn(sudokuGame);
             System.out.println(turnResult + " case have been found this turn");
         }

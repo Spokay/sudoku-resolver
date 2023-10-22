@@ -60,4 +60,15 @@ public class SquareShape implements Shape{
                 .forEach(singlePossibilitiesCases::add);
         return singlePossibilitiesCases;
     }
+
+    public List<Case> getPossibleCasesForNumber(Integer numberToCheck) {
+        List<Case> possibleCases = new ArrayList<>();
+
+        Arrays.stream(cases).forEach(caseRow -> Arrays.stream(caseRow)
+                .filter(Case::isEmpty)
+                .filter(caseInRow -> caseInRow.getPossibleValue().contains(numberToCheck))
+                .forEach(possibleCases::add)
+        );
+        return possibleCases;
+    }
 }

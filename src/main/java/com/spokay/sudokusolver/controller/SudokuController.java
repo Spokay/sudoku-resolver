@@ -39,7 +39,7 @@ public class SudokuController {
         List<LineShape> sudokuRows = sudokuGame.getGrid().getLines().get("rows");
         Integer squareSize = sudokuGame.getGrid().getSquareSize();
 
-        return new ModelAndView("sudoku-viewer")
+        return new ModelAndView("sudoku-viewer.html")
                 .addObject("sudokuRows",sudokuRows)
                 .addObject("squareSize", squareSize)
                 .addObject("sudokuId", id);
@@ -61,6 +61,7 @@ public class SudokuController {
         return new ModelAndView("redirect:/sudoku/"+ id);
     }
 
+    @GetMapping("/{id}/resolve-all")
     ModelAndView resolveAll(@PathVariable Integer id) {
         ClassicSudokuGame sudokuGame = sudokuHolder.getSudokuHoldedById(id);
         sudokuGameManager.resolveAllCases(sudokuGame);

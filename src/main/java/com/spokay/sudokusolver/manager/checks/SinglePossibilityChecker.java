@@ -22,14 +22,14 @@ public class SinglePossibilityChecker implements Checker{
     }
     @Override
     public int checkLineShape(ClassicGrid sudokuGrid, String direction) {
-        String axis = Objects.equals(direction, "rows") ? "x" : "y";
         AtomicInteger singlesFound = new AtomicInteger();
         sudokuGrid.getLines().get(direction).stream()
                 .filter(LineShape::hasSinglesPossibilitiesRemaining)
                 .forEach(lineShape -> lineShape.getSinglePossibilitiesCase().forEach(caseToFill -> {
-                    singlesFound.getAndIncrement();
                     caseToFill.setValue(caseToFill.getLastPossibility());
                     caseToFill.setCaseState(CaseState.FILLED_CASE);
+                    caseToFill.getPossibleValue().clear();
+                    singlesFound.getAndIncrement();
                 }));
         return singlesFound.get();
     }
@@ -45,10 +45,13 @@ public class SinglePossibilityChecker implements Checker{
                         .forEach(caseToFill -> {
                             caseToFill.setValue(caseToFill.getLastPossibility());
                             caseToFill.setCaseState(CaseState.FILLED_CASE);
+                            caseToFill.getPossibleValue().clear();
                             singlesFound.getAndIncrement();
                         })
                     );
         }
+
+
         return singlesFound.get();
     }
 }
