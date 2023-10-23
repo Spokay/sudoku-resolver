@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<form th:action="@{/sudoku/start}" method="post">
+<form th:action="@{/sudoku/start}" method="post" class="sudokuForm">
 
     <label for="gridSize">Grid Size</label>
     <select name="gridSize" id="gridSize">
@@ -31,7 +31,7 @@
 
     </div>
 </div>
-
+<script th:src="@{/js/jquery/dist/jquery.js}"></script>
 <script th:src="@{/js/grid-sandbox.js}"></script>
 </body>
 </html>

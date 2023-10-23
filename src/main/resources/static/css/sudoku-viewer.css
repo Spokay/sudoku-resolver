@@ -1,14 +1,12 @@
 .container{
     margin: 0 auto;
     display: flex;
-    width: 70vw;
-    height: 70vw;
+    width: 90vw;
+    height: 90vw;
     justify-content: center;
     align-content: center;
 }
-.sudoku {
-    width: 100%;
-}
+
 .sudoku tr{
     display: flex;
     flex-wrap: wrap;
@@ -22,31 +20,49 @@
     align-items: center;
     justify-content: center;
 }
-.sudoku .first-td{
-    border-left-color: red;
-}
-.sudoku .last-td{
-    border-right-color: red;
-}
-
-.sudoku .styled-td{
-    border-left-color: red;
-}
-
-.sudoku .styled-tr > td{
-    border-top-color: red;
-}
-.sudoku .first-tr > td{
-    border-top-color: red;
-}
 
 .sudoku .row{
     display: flex;
+    border-collapse: collapse;
 }
 .sudoku .row .square{
-    flex-grow: 1;
+    width: 50px;
+    height: 50px;
+    border-top: 1px solid dodgerblue;
+    border-left: 1px solid dodgerblue;
+    border-collapse: collapse;
 }
 .sudoku .row .square input{
     width: 100%;
     height: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: none;
+    outline: none;
+}
+
+
+.sudoku .first-td{
+    border-left-color: red !important;
+}
+.sudoku .last-td{
+    border-right: 1px solid red !important;
+}
+
+.sudoku .styled-td{
+    border-left-color: red !important;
+}
+
+.sudoku .styled-tr > div{
+    border-top-color: red !important;
+}
+.sudoku .first-tr > div{
+    border-top-color: red !important;
+}
+.sudoku .last-tr > div{
+    border-bottom: 1px solid red !important;
 }

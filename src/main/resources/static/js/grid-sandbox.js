@@ -1,7 +1,6 @@
 
 let gridSizeInput = document.getElementById("gridSize");
-let squareSizeInput = document.getElementById("squareSize");
-let submitBtn = document.getElementById("submitBtn");
+let form = document.querySelector(".sudokuForm");
 let sudokuGridContainer = document.querySelector(".sudoku");
 let gridStringData = document.getElementById("gridStringData");
 class Grid{
@@ -20,9 +19,9 @@ class Grid{
     setGridHTML() {
         let gridHTML = "";
         for(let i = 0; i < this.gridSize; i++) {
-            gridHTML += "<div class='row'>";
+            gridHTML += `<div class='row ${i === 0 ? 'first-tr ' : ''}${i === (this.gridSize - 1) ? 'last-tr ' : ''}${i % 3 === 0 && i !== 0 ? 'styled-tr' : ''}'>`;
             for(let j = 0; j < this.gridSize; j++) {
-                gridHTML += `<div class='square'><input type='text' name='${i}-${j}' class='case-${i}-${j}' value='0'></div>`;
+                gridHTML += `<div class='square ${j === 0 ? 'first-td ' : ''}${j === (this.gridSize - 1) ? 'last-td ' : ''}${j % 3 === 0 && j !== 0 ? 'styled-td' : ''}'><input type='number' name='${i}-${j}' class='case-${i}-${j}' value='' min="1" max="${this.gridSize}"></div>`;
             }
             gridHTML += "</div>";
         }
@@ -40,10 +39,14 @@ class Grid{
             for(let j = 0; j < this.gridSize; j++) {
                 let currentCase = this.querySelectCase(i, j);
                 currentCase.addEventListener("change", (e) => {
-                    console.log(e.target.value);
-                    gridData[i.toString()][j.toString()] = e.target.value;
+                    if(e.target.value === "" || e.target.value === "0"){
+                        gridData[i.toString()][j.toString()] = 0;
+                        e.target.value = "";
+                    }else{
+                        gridData[i.toString()][j.toString()] = e.target.value;
+                    }
                 });
-                gridData[i.toString()][j.toString()] = currentCase.value;
+                gridData[i.toString()][j.toString()] = currentCase.value === "" ? 0 : currentCase.value;
             }
         }
         console.log(gridData);
@@ -57,13 +60,13 @@ class Grid{
 
 let grid = new Grid(gridSizeInput.value);
 
-
 gridSizeInput.addEventListener("change", () => {
     grid = new Grid(gridSizeInput.value);
 });
 
-submitBtn.addEventListener("click", (e) => {
+form.addEventListener("submit", (e) => {
     e.preventDefault();
     gridStringData.value = JSON.stringify(grid.gridData);
     console.log(gridStringData.value);
+    form.submit();
 });

@@ -11,13 +11,11 @@
 </head>
 <body>
     <div class="container">
-        <table class="sudoku">
-            <tbody>
-                <tr th:each="row, rowIndex: ${sudokuRows}" th:class="${(rowIndex.first ? 'first-tr ' : '') + (rowIndex.last ? 'last-tr ' : '') +(rowIndex.index % 3 == 0 && !rowIndex.first ? 'styled-tr' : '')}">
-                    <td th:each="case, columnIndex: ${row.getLineCases()}" th:text="${case.getValue() != 0 ? case.getValue() : ''}" th:class="${(columnIndex.first ? 'first-td ' : '') + (columnIndex.last ? 'last-td ' : '') +(columnIndex.index % 3 == 0 && !columnIndex.first ? 'styled-td' : '')}"></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="sudoku">
+                <div th:each="row, rowIndex: ${sudokuRows}" th:class="'row '+${(rowIndex.first ? 'first-tr ' : '') + (rowIndex.last ? 'last-tr ' : '') +(rowIndex.index % 3 == 0 && !rowIndex.first ? 'styled-tr' : '')}">
+                    <div th:each="case, columnIndex: ${row.getLineCases()}" th:class="'square ' +${(columnIndex.first ? 'first-td ' : '') + (columnIndex.last ? 'last-td ' : '') +(columnIndex.index % 3 == 0 && !columnIndex.first ? 'styled-td' : '')}" th:text="${(case.getValue() != 0 ? case.getValue() : '')}"></div>
+                </div>
+        </div>
         <a th:href="@{/sudoku/{id}/next-turn(id=${sudokuId})}">next turn</a>
         <a th:href="@{/sudoku/{id}/resolve-all(id=${sudokuId})}">resolve all cases</a>
     </div>
