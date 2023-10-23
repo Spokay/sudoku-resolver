@@ -15,9 +15,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/sudoku")
@@ -33,23 +37,27 @@ public class SudokuController {
     ClassicSudokuGameManager sudokuGameManager;
 
     @GetMapping("/{id}")
-    public ModelAndView displaySudoku(@PathVariable Integer id){
+    public ModelAndView displaySudoku(@PathVariable Integer id, RedirectAttributes redirectAttributes){
         ClassicSudokuGame sudokuGame = sudokuHolder.getSudokuHoldedById(id);
 
         List<LineShape> sudokuRows = sudokuGame.getGrid().getLines().get("rows");
         Integer squareSize = sudokuGame.getGrid().getSquareSize();
+        Map<String, Object> data = new HashMap<>();
+        data.put("sudokuRows", sudokuRows);
+        data.put("squareSize", squareSize);
+        data.put("sudokuId", id);
+        if (redirectAttributes.getFlashAttributes().containsKey("result")){
+            data.put("result", redirectAttributes.getFlashAttributes().get("result"));
+        }
 
         return new ModelAndView("sudoku-viewer.html")
-                .addObject("sudokuRows",sudokuRows)
-                .addObject("squareSize", squareSize)
-                .addObject("sudokuId", id);
+                .addAllObjects(data);
     }
 
     @PostMapping("/start")
     public ModelAndView startSudoku(@Validated GridCreationDTO gridCreationDTO) throws IOException {
         ClassicSudokuGame sudokuGame = classicSudokuBuilder.buildSudokuFromGridData(gridCreationDTO);
         Integer sudokuId = sudokuHolder.holdSudokuAndReturnId(sudokuGame);
-
         return new ModelAndView("redirect:/sudoku/"+ sudokuId);
     }
 
@@ -62,10 +70,10 @@ public class SudokuController {
     }
 
     @GetMapping("/{id}/resolve-all")
-    ModelAndView resolveAll(@PathVariable Integer id) {
+    ModelAndView resolveAll(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         ClassicSudokuGame sudokuGame = sudokuHolder.getSudokuHoldedById(id);
-        sudokuGameManager.resolveAllCases(sudokuGame);
-
-        return new ModelAndView("redirect:/sudoku/" + id);
+        boolean result = sudokuGameManager.resolveAllCases(sudokuGame);
+        redirectAttributes.addFlashAttribute("result", result);
+        return new ModelAndView("redirect:/sudoku/" + id).addObject("result", result);
     }
 }

@@ -64,4 +64,8 @@ public class GridUtils {
                 );
         return result.get();
     }
+
+    public static Case[][] buildCopyOfCases(Case[][] reference){
+        return Arrays.stream(reference).map(Case[]::clone).toArray(Case[][]::new);
+    }
 }

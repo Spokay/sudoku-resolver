@@ -31,6 +31,9 @@
     border-top: 1px solid dodgerblue;
     border-left: 1px solid dodgerblue;
     border-collapse: collapse;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .sudoku .row .square input{
     width: 100%;
@@ -44,6 +47,7 @@
     border: none;
     outline: none;
 }
+
 
 
 .sudoku .first-td{
@@ -65,4 +69,11 @@
 }
 .sudoku .last-tr > div{
     border-bottom: 1px solid red !important;
+}
+
+.success{
+    background-color: #5cff63;
+}
+.fail{
+    background-color: #ff4c4f;
 }
